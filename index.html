@@ -266,6 +266,14 @@
         </div>
     </div>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+    </script>
+
     <script>
         // Function to get URL parameters
         function getUrlParams() {
@@ -332,6 +340,25 @@
             document.getElementById('completionScreen').style.display = 'block';
             document.getElementById('pageTitle').textContent = 'Wellness Check Complete!';
         });
+
+        const params = new URLSearchParams(window.location.search);
+
+        const siteId = params.get("siteId");
+        const residentId = params.get("residentId");
+
+        document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const residentRef = doc(db, "sites", siteId, "residents", residentId);
+
+            await updateDoc(residentRef, {
+                state: true,
+                last_check_in: new Date()
+            });
+
+            console.log("Resident state updated");
+        });
+        
     </script>
 </body>
 </html>
