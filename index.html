@@ -188,9 +188,44 @@
                     <label for="siteName">Site Name</label>
                     <select id="siteName" name="siteName" required>
                         <option value="">Select a site...</option>
-                        <option value="site1">Site 1</option>
-                        <option value="site2">Site 2</option>
-                        <option value="site3">Site 3</option>
+                        <option value="mTXyXwRk1Ij9RXqgxq9I">666 ELLIS STREET</option>
+                        <option value="CFGpiYra4azjJBJCC7JB">DRS. JULIAN & RAYE RICHARDSON APARTMENTS</option>
+                        <option value="DGrNKqinxsIUjdmfOhDu">MISSION BAY</option>
+                        <option value="FXmRnczocmfuRzv1RJ9r">ARNETT WATSON APARTMENTS</option>
+                        <option value="I1t7wfStdjOf2s5zYBnh">5TH STREET APARTMENTS</option>
+                        <option value="IF9eH4RtZvmNdmCx5iO9">RENE CAZENAVE APARTMENTS</option>
+                        <option value="M7hziT79YLCUcOGQ9MRT">SAN CRISTINA</option>
+                        <option value="MDratkS8egjfZ9SKmCpW">HAMLIN HOTEL</option>
+                        <option value="OXH8DFp9B6sdwQZhKQ3X">THE VILLAGES & ISLAND BAY HOMES</option>
+                        <option value="V2d0vH2MyTo7AKbINBV5">SENATOR</option>
+                        <option value="bSeQ6DIdGlFISkM0prOA">ZYGMUNT ARENDT HOUSE</option>
+                        <option value="cOUc8cJTDByJ0ZnpJ5yQ">THE VILLIAM PENN HOTEL</option>
+                        <option value="d7NsbcVmpf0f9vZR7W36">EDWARD II</option>
+                        <option value="fMIxqJY5nw7Vyl0eGh26">JAZZIE COLLINS APARTMENTS</option>
+                        <option value="moB1mpyDCE4MKQr6aHpB">RACHEL TOWNSEND APARTMENTS</option>
+                        <option value="qbzsN8GkYnoCdtO2nMo6">CAMBRIDGE APARTMENTS</option>
+                        <option value="wFuloyHMd5NB2iz1E1LK">IROQUOIS</option>
+                        <option value="wV3OMQ4naZDVacBhJ11Z">ESSEX</option>
+
+                        <!-- <option value="666ELLISSTREET">666 ELLIS STREET</option>
+                        <option value="DRSJULIAN&RAYERICHARDSONAPARTMENTS">DRS. JULIAN & RAYE RICHARDSON APARTMENTS</option>
+                        <option value="MISSIONBAY">MISSION BAY</option>
+                        <option value="ARNETTWATSONAPARTMENTS">ARNETT WATSON APARTMENTS</option>
+                        <option value="5THSTREETAPARTMENTS">5TH STREET APARTMENTS</option>
+                        <option value="RENECAZENAVEAPARTMENTS">RENE CAZENAVE APARTMENTS</option>
+                        <option value="SANCRISTINA">SAN CRISTINA</option>
+                        <option value="HAMLINHOTEL">HAMLIN HOTEL</option>
+                        <option value="THEVILLAGES&ISLANDBAYHOMES">THE VILLAGES & ISLAND BAY HOMES</option>
+                        <option value="SENATOR">SENATOR</option>
+                        <option value="ZYGMUNTARENDTHOUSE">ZYGMUNT ARENDT HOUSE</option>
+                        <option value="THEVILLIAMPENNHOTEL">THE VILLIAM PENN HOTEL</option>
+                        <option value="EDWARD II">EDWARD II</option>
+                        <option value="JAZZIECOLLINSAPARTMENTS">JAZZIE COLLINS APARTMENTS</option>
+                        <option value="RACHELTOWNSENDAPARTMENTS">RACHEL TOWNSEND APARTMENTS</option>
+                        <option value="CAMBRIDGEAPARTMENTS">CAMBRIDGE APARTMENTS</option>
+                        <option value="IROQUOIS">IROQUOIS</option>
+                        <option value="ESSEX">ESSEX</option> -->
+                    
                     </select>
                 </div>
 
@@ -248,7 +283,7 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -256,10 +291,19 @@ import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs
 /* ---------------- Firebase Setup ---------------- */
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
+    apiKey: "AIzaSyBoZMRJHGBrYsv3z3Ls1MZDSiUTEjDxjPU",
+  authDomain: "homerise-portal.firebaseapp.com",
+  projectId: "homerise-portal",
 };
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBoZMRJHGBrYsv3z3Ls1MZDSiUTEjDxjPU",
+//   authDomain: "homerise-portal.firebaseapp.com",
+//   projectId: "homerise-portal",
+//   storageBucket: "homerise-portal.firebasestorage.app",
+//   messagingSenderId: "218556386496",
+//   appId: "1:218556386496:web:ced25a39929792d80d3125"
+// };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -276,7 +320,9 @@ const residentId = params.get("residentId");
             const params = new URLSearchParams(window.location.search);
             return {
                 siteName: params.get('siteName') || '',
+                siteId: params.get('siteId') || '',
                 residentName: params.get('residentName') || '',
+                residentId: params.get('residentId') || '',
                 hodName: params.get('hodName') || '',
                 details: params.get('details') || ''
             };
@@ -286,8 +332,8 @@ const residentId = params.get("residentId");
         window.addEventListener('DOMContentLoaded', function() {
             const params = getUrlParams();
             
-            if (params.siteName) {
-                document.getElementById('siteName').value = params.siteName;
+            if (params.siteId) {
+                document.getElementById('siteName').value = params.siteId;
             }
             if (params.residentName) {
                 document.getElementById('residentName').value = params.residentName;
@@ -298,7 +344,6 @@ const residentId = params.get("residentId");
             if (params.details) {
                 document.getElementById('details').value = params.details;
             }
-        });
 
         document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -350,6 +395,8 @@ const residentId = params.get("residentId");
             document.getElementById('completionScreen').style.display = 'block';
             document.getElementById('pageTitle').textContent = 'Wellness Check Complete!';
         });
+        });
+
     </script>
 </body>
 </html>
