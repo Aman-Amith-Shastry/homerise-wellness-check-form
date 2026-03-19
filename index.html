@@ -287,6 +287,13 @@
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { 
+    doc, 
+    updateDoc, 
+    collection, 
+    addDoc, 
+    serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* ---------------- Firebase Setup ---------------- */
 
@@ -346,29 +353,75 @@ const residentId = params.get("residentId");
             }
 
         document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+    //         e.preventDefault();
             
-            const formData = {
-                siteName: document.getElementById('siteName').value,
-                residentName: document.getElementById('residentName').value,
-                hodName: document.getElementById('hodName').value,
-                details: document.getElementById('details').value
-            };
+    //         const formData = {
+    //             siteName: document.getElementById('siteName').value,
+    //             residentName: document.getElementById('residentName').value,
+    //             hodName: document.getElementById('hodName').value,
+    //             details: document.getElementById('details').value
+    //         };
             
-            console.log('Form submitted:', formData);
+    //         console.log('Form submitted:', formData);
 
-             if (siteId && residentId) {
+    //          if (siteId && residentId) {
 
-        const residentRef = doc(db, "sites", siteId, "residents", residentId);
+    //     const residentRef = doc(db, "sites", siteId, "residents", residentId);
 
-        await updateDoc(residentRef, {
-            state: true,
-            last_check_in: new Date(),
-            last_hod: formData.hodName,
-            notes: formData.details
-        });
+    //     await updateDoc(residentRef, {
+    //         state: true,
+    //         last_check_in: new Date(),
+    //         // last_hod: formData.hodName,
+    //         notes: formData.details,
+    //         wellnessCheck: formData.details
+    //     });
 
-        console.log("Resident state updated in Firestore");
+    //     console.log("Resident state updated in Firestore");
+    // }
+    e.preventDefault();
+
+    const formData = {
+        siteName: document.getElementById('siteName').value,
+        residentName: document.getElementById('residentName').value,
+        hodName: document.getElementById('hodName').value,
+        details: document.getElementById('details').value
+    };
+
+    console.log('Form submitted:', formData);
+
+    try {
+        if (siteId && residentId) {
+
+            // 🔹 1. Reference to resident document
+            const residentRef = doc(db, "sites", siteId, "residents", residentId);
+
+            // 🔹 2. Reference to subcollection
+            const wellnessRef = collection(residentRef, "wellnessChecks");
+
+            // 🔹 3. Add a NEW entry (auto-creates collection if needed)
+            await addDoc(wellnessRef, {
+                details: formData.details,
+                hodName: formData.hodName,
+                createdAt: serverTimestamp()
+            });
+
+            console.log("Wellness check added");
+
+            // 🔹 4. Update resident document
+            await updateDoc(residentRef, {
+                state: true,
+                last_check_in: serverTimestamp(),
+                last_hod: formData.hodName,
+                notes: formData.details
+            });
+
+            console.log("Resident updated");
+        } else {
+            console.warn("Missing siteId or residentId");
+        }
+
+    } catch (error) {
+        console.error("Error submitting wellness check:", error);
     }
             
             // Get current date and time
