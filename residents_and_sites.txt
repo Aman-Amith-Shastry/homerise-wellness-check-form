@@ -1,0 +1,60 @@
+
+Site ID CFGpiYra4azjJBJCC7JB: Site Name DRS. JULIAN & RAYE RICHARDSON APARTMENTS: 
+Resident ID 7gUQCwW8i8MQDKTs25bq: Resident Name Aman Shastry: 
+Resident ID IdwZRwkuStGguMP0l67d: Resident Name Nisha Koshy: 
+
+Site ID DGrNKqinxsIUjdmfOhDu: Site Name MISSION BAY: 
+Resident ID Nkxk0rX28Atmifho3O9o: Resident Name John Doe: 
+
+Site ID FXmRnczocmfuRzv1RJ9r: Site Name ARNETT WATSON APARTMENTS: 
+Resident ID fndoPvk7z4I9z5mo3YZz: Resident Name Vaman Rajagopal: 
+
+Site ID I1t7wfStdjOf2s5zYBnh: Site Name 5TH STREET APARTMENTS: 
+Resident ID DK6d9pI6VadwtYNqx52y: Resident Name Nick Graden: 
+
+Site ID IF9eH4RtZvmNdmCx5iO9: Site Name RENE CAZENAVE APARTMENTS: 
+Resident ID jl3YXh71xEqp08OKxiQX: Resident Name hgfuerf bfhreio: 
+
+Site ID M7hziT79YLCUcOGQ9MRT: Site Name SAN CRISTINA: 
+Resident ID rUEo4NabtXuxCqLXHnVC: Resident Name Vaman Rajagopal: 
+
+Site ID MDratkS8egjfZ9SKmCpW: Site Name HAMLIN HOTEL: 
+Resident ID B8vfjK1YAJfSRFzJIehn: Resident Name uerhgjr houehofef: 
+
+Site ID OXH8DFp9B6sdwQZhKQ3X: Site Name THE VILLAGES & ISLAND BAY HOMES: 
+Resident ID 8FG6upZRmako9GrkgZR9: Resident Name Computer Science Major Music Major: 
+
+Site ID V2d0vH2MyTo7AKbINBV5: Site Name SENATOR: 
+Resident ID H1ZHwX5MlK27iNmhVBGd: Resident Name rhourheoufe heihourehf: 
+
+Site ID bSeQ6DIdGlFISkM0prOA: Site Name ZYGMUNT ARENDT HOUSE: 
+Resident ID fM9uR0kbUO6NLUIBjd0d: Resident Name uhguorhgui hefjewhjfk: 
+
+Site ID cOUc8cJTDByJ0ZnpJ5yQ: Site Name THE VILLIAM PENN HOTEL: 
+Resident ID ah9TZlSmD6HJvtOXq4r1: Resident Name hwuheruof jfnvjkenv: 
+
+Site ID d7NsbcVmpf0f9vZR7W36: Site Name EDWARD II: 
+Resident ID KF191U10lCvCCJihEFdF: Resident Name ehoiuerhuiorehj jdnjkwenjk: 
+
+Site ID fMIxqJY5nw7Vyl0eGh26: Site Name JAZZIE COLLINS APARTMENTS: 
+Resident ID 3z3vjMxjFUaioYItpi6Z: Resident Name wee erettr: 
+Resident ID fsbFPh2gBl15NSNFuLHi: Resident Name ehgerhguoi jfhvjkfehvuej: 
+
+Site ID mTXyXwRk1Ij9RXqgxq9I: Site Name 666 ELLIS STREET: 
+Resident ID 1000: Resident Name Bob Dylan: 
+Resident ID bwVfDhseToD5eu1xf0iR: Resident Name Lil Baby: 
+Resident ID xh6fpRLyxnYbVc6Q6cV1: Resident Name David Paoletti: 
+
+Site ID moB1mpyDCE4MKQr6aHpB: Site Name RACHEL TOWNSEND APARTMENTS: 
+Resident ID GGxAyLPXZ2LMBE2idrmd: Resident Name oihewor weer: 
+
+Site ID qbzsN8GkYnoCdtO2nMo6: Site Name CAMBRIDGE APARTMENTS: 
+Resident ID TgGL4l2AZFUXsLHpMXF0: Resident Name Margaret oieoer: 
+Resident ID aNF6ZhOxrdiBaYlMXC7c: Resident Name Jimmy Doe: 
+
+Site ID wFuloyHMd5NB2iz1E1LK: Site Name IROQUOIS: 
+Resident ID Y2hgGhsp5cXgA9irlM2i: Resident Name Justin Doe: 
+Resident ID ovJOKmHUtUN3MBT9rqKy: Resident Name Jane Doe: 
+
+Site ID wV3OMQ4naZDVacBhJ11Z: Site Name ESSEX: 
+Resident ID sRjhk1wMKKO9YIMDArUA: Resident Name John Doe:
