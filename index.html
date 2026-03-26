@@ -403,7 +403,7 @@ const residentId = params.get("residentId");
             const residentRef = doc(db, "sites", siteId, "residents", residentId);
 
             // 🔹 2. Reference to subcollection
-            const wellnessRef = collection(residentRef, "wellnessChecks");
+            const wellnessRef = collection(residentRef, "wellness_checks");
 
             // 🔹 3. Add a NEW entry (auto-creates collection if needed)
             await addDoc(wellnessRef, formData);
