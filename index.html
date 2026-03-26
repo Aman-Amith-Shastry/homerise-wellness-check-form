@@ -412,6 +412,7 @@ const residentId = params.get("residentId");
 
             // 🔹 4. Update resident document
             await updateDoc(residentRef, {
+                email: formData.email,
                 state: true,
                 last_check_in: serverTimestamp(),
                 last_hod: formData.hodName,
