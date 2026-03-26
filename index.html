@@ -237,7 +237,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Resident Email</label>
+                    <label for="email">Site Lead Email</label>
                     <input type="email" id="email" name="email" placeholder="e.g. john.doe@example.com" required>
                 </div>
 
@@ -293,13 +293,14 @@
     <script type="module">
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { 
+    getFirestore, 
     doc, 
     updateDoc, 
     collection, 
     addDoc, 
-    serverTimestamp 
+    serverTimestamp,
+    getDoc 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* ---------------- Firebase Setup ---------------- */
@@ -310,14 +311,6 @@ const firebaseConfig = {
   projectId: "homerise-portal",
 };
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBoZMRJHGBrYsv3z3Ls1MZDSiUTEjDxjPU",
-//   authDomain: "homerise-portal.firebaseapp.com",
-//   projectId: "homerise-portal",
-//   storageBucket: "homerise-portal.firebasestorage.app",
-//   messagingSenderId: "218556386496",
-//   appId: "1:218556386496:web:ced25a39929792d80d3125"
-// };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -341,6 +334,28 @@ const residentId = params.get("residentId");
                 details: params.get('details') || ''
             };
         }
+    
+        // store Site Lead Email from Firestore for comparison later
+    let leadStaffEmail = null;
+
+    if (siteId) {
+        try {
+            const siteRef = doc(db, "sites", siteId);
+            const siteSnap = await getDoc(siteRef);
+
+            if (siteSnap.exists()) {
+                const data = siteSnap.data();
+                leadStaffEmail = data.lead_staff_email || null;
+
+                console.log("Fetched lead staff email:", leadStaffEmail);
+            } else {
+                console.warn("Site document does not exist");
+            }
+
+        } catch (err) {
+            console.error("Error fetching site email:", err);
+        }
+    }
 
         // Prefill form fields on page load
         window.addEventListener('DOMContentLoaded', function() {
@@ -358,6 +373,8 @@ const residentId = params.get("residentId");
             if (params.details) {
                 document.getElementById('details').value = params.details;
             }
+
+            
 
         document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
     //         e.preventDefault();
