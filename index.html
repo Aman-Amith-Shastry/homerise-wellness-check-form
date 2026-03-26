@@ -336,28 +336,28 @@ const residentId = params.get("residentId");
         }
     
         // store Site Lead Email from Firestore for comparison later
-    window.addEventListener('DOMContentLoaded', async function() {
-        let leadStaffEmail = null;
+    // window.addEventListener('DOMContentLoaded', async function() {
+    //     let leadStaffEmail = null;
 
-        if (siteId) {
-            try {
-                const siteRef = doc(db, "sites", siteId);
-                const siteSnap = await getDoc(siteRef);
+    //     if (siteId) {
+    //         try {
+    //             const siteRef = doc(db, "sites", siteId);
+    //             const siteSnap = await getDoc(siteRef);
 
-                if (siteSnap.exists()) {
-                    const data = siteSnap.data();
-                    leadStaffEmail = data.lead_staff_email || null;
+    //             if (siteSnap.exists()) {
+    //                 const data = siteSnap.data();
+    //                 leadStaffEmail = data.lead_staff_email || null;
 
-                    console.log("Fetched lead staff email:", leadStaffEmail);
-                } else {
-                    console.warn("Site document does not exist");
-                }
+    //                 console.log("Fetched lead staff email:", leadStaffEmail);
+    //             } else {
+    //                 console.warn("Site document does not exist");
+    //             }
 
-            } catch (err) {
-                console.error("Error fetching site email:", err);
-            }
-        }
-    })
+    //         } catch (err) {
+    //             console.error("Error fetching site email:", err);
+    //         }
+    //     }
+    // })
 
         // Prefill form fields on page load
         window.addEventListener('DOMContentLoaded', function() {
