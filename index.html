@@ -379,43 +379,22 @@ const residentId = params.get("residentId");
             
 
         document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
-    //         e.preventDefault();
-            
-    //         const formData = {
-    //             siteName: document.getElementById('siteName').value,
-    //             residentName: document.getElementById('residentName').value,
-    //             hodName: document.getElementById('hodName').value,
-    //             details: document.getElementById('details').value
-    //         };
-            
-    //         console.log('Form submitted:', formData);
-
-    //          if (siteId && residentId) {
-
-    //     const residentRef = doc(db, "sites", siteId, "residents", residentId);
-
-    //     await updateDoc(residentRef, {
-    //         state: true,
-    //         last_check_in: new Date(),
-    //         // last_hod: formData.hodName,
-    //         notes: formData.details,
-    //         wellnessCheck: formData.details
-    //     });
-
-    //     console.log("Resident state updated in Firestore");
-    // }
+    
+   
     e.preventDefault();
 
     const formData = {
         siteName: document.getElementById('siteName').value,
         residentName: document.getElementById('residentName').value,
+        email: document.getElementById('email').value,
         hodName: document.getElementById('hodName').value,
-        details: document.getElementById('details').value
+        details: document.getElementById('details').value,
+        createdAt: serverTimestamp()
     };
 
     console.log('Form submitted:', formData);
     var lmao = "lmfao"
-    
+
     try {
         if (siteId && residentId) {
 
@@ -426,11 +405,7 @@ const residentId = params.get("residentId");
             const wellnessRef = collection(residentRef, "wellnessChecks");
 
             // 🔹 3. Add a NEW entry (auto-creates collection if needed)
-            await addDoc(wellnessRef, {
-                details: formData.details,
-                hodName: formData.hodName,
-                createdAt: serverTimestamp()
-            });
+            await addDoc(wellnessRef, formData);
 
             console.log("Wellness check added");
 
