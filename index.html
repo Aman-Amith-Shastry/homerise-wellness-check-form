@@ -298,15 +298,19 @@
                 try {
                     const querySnapshot = await getDocs(collection(db, "sites"));
 
-                    querySnapshot.forEach((doc) => {
-                    const data = doc.data();
+                    const sites = [];
+                        querySnapshot.forEach(doc => {
+                            sites.push({ id: doc.id, name: doc.data().name });
+                        });
 
-                    const option = document.createElement("option");
-                    option.value = doc.id;        // site ID
-                    option.textContent = data.name; // visible name
+                        sites.sort((a, b) => a.name.localeCompare(b.name));
 
-                    select.appendChild(option);
-                    });
+                        sites.forEach(site => {
+                            const option = document.createElement("option");
+                            option.value = site.id;
+                            option.textContent = site.name;
+                            select.appendChild(option);
+                        });
 
                 } catch (error) {
                     console.error("Error loading sites:", error);
