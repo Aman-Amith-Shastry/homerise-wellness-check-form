@@ -174,6 +174,8 @@
 
     </style>
 </head>
+
+
 <body>
     <div class="container">
         <div class="header">
@@ -181,14 +183,13 @@
             <h1 id="pageTitle">Wellness Check Form</h1>
         </div>
 
-        <!-- Form Screen -->
         <div id="formScreen" class="form-card">
             <form id="wellnessForm">
                 <div class="form-group">
                     <label for="siteName">Site Name</label>
                     <select id="siteName" name="siteName" required>
                         <option value="">Select a site...</option>
-                        <option value="mTXyXwRk1Ij9RXqgxq9I">666 ELLIS STREET</option>
+                        <!-- <option value="mTXyXwRk1Ij9RXqgxq9I">666 ELLIS STREET</option>
                         <option value="CFGpiYra4azjJBJCC7JB">DRS. JULIAN & RAYE RICHARDSON APARTMENTS</option>
                         <option value="DGrNKqinxsIUjdmfOhDu">MISSION BAY</option>
                         <option value="FXmRnczocmfuRzv1RJ9r">ARNETT WATSON APARTMENTS</option>
@@ -205,29 +206,7 @@
                         <option value="moB1mpyDCE4MKQr6aHpB">RACHEL TOWNSEND APARTMENTS</option>
                         <option value="qbzsN8GkYnoCdtO2nMo6">CAMBRIDGE APARTMENTS</option>
                         <option value="wFuloyHMd5NB2iz1E1LK">IROQUOIS</option>
-                        <option value="wV3OMQ4naZDVacBhJ11Z">ESSEX</option>
-
-                        <!-- 
-                        <option value="666ELLISSTREET">666 ELLIS STREET</option>
-                        <option value="DRSJULIAN&RAYERICHARDSONAPARTMENTS">DRS. JULIAN & RAYE RICHARDSON APARTMENTS</option>
-                        <option value="MISSIONBAY">MISSION BAY</option>
-                        <option value="ARNETTWATSONAPARTMENTS">ARNETT WATSON APARTMENTS</option>
-                        <option value="5THSTREETAPARTMENTS">5TH STREET APARTMENTS</option>
-                        <option value="RENECAZENAVEAPARTMENTS">RENE CAZENAVE APARTMENTS</option>
-                        <option value="SANCRISTINA">SAN CRISTINA</option>
-                        <option value="HAMLINHOTEL">HAMLIN HOTEL</option>
-                        <option value="THEVILLAGES&ISLANDBAYHOMES">THE VILLAGES & ISLAND BAY HOMES</option>
-                        <option value="SENATOR">SENATOR</option>
-                        <option value="ZYGMUNTARENDTHOUSE">ZYGMUNT ARENDT HOUSE</option>
-                        <option value="THEVILLIAMPENNHOTEL">THE VILLIAM PENN HOTEL</option>
-                        <option value="EDWARD II">EDWARD II</option>
-                        <option value="JAZZIECOLLINSAPARTMENTS">JAZZIE COLLINS APARTMENTS</option>
-                        <option value="RACHELTOWNSENDAPARTMENTS">RACHEL TOWNSEND APARTMENTS</option>
-                        <option value="CAMBRIDGEAPARTMENTS">CAMBRIDGE APARTMENTS</option>
-                        <option value="IROQUOIS">IROQUOIS</option>
-                        <option value="ESSEX">ESSEX</option> 
-                        -->
-                    
+                        <option value="wV3OMQ4naZDVacBhJ11Z">ESSEX</option> -->
                     </select>
                 </div>
 
@@ -291,29 +270,53 @@
     </div>
 
     <script type="module">
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { 
-    getFirestore, 
-    doc,
-    updateDoc, 
-    collection, 
-    addDoc, 
-    serverTimestamp,
-    getDoc 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 /* ---------------- Firebase Setup ---------------- */
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+            import { 
+                getFirestore, 
+                doc,
+                updateDoc, 
+                collection, 
+                addDoc,
+                getDocs, 
+                serverTimestamp,
+                getDoc 
+            } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBoZMRJHGBrYsv3z3Ls1MZDSiUTEjDxjPU",
-  authDomain: "homerise-portal.firebaseapp.com",
-  projectId: "homerise-portal",
-};
+            const firebaseConfig = {
+                apiKey: "AIzaSyBoZMRJHGBrYsv3z3Ls1MZDSiUTEjDxjPU",
+                authDomain: "homerise-portal.firebaseapp.com",
+                projectId: "homerise-portal",
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            async function loadSites() {
+                const select = document.getElementById("siteName");
+
+                try {
+                    const querySnapshot = await getDocs(collection(db, "sites"));
+
+                    querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+
+                    const option = document.createElement("option");
+                    option.value = doc.id;        // site ID
+                    option.textContent = data.name; // visible name
+
+                    select.appendChild(option);
+                    });
+
+                } catch (error) {
+                    console.error("Error loading sites:", error);
+                }
+            }
+
+                loadSites();
 
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+
 
 /* ---------------- URL Params ---------------- */
 
@@ -335,30 +338,6 @@ const residentId = params.get("residentId");
             };
         }
     
-        // store Site Lead Email from Firestore for comparison later
-    // window.addEventListener('DOMContentLoaded', async function() {
-    //     let leadStaffEmail = null;
-
-    //     if (siteId) {
-    //         try {
-    //             const siteRef = doc(db, "sites", siteId);
-    //             const siteSnap = await getDoc(siteRef);
-
-    //             if (siteSnap.exists()) {
-    //                 const data = siteSnap.data();
-    //                 leadStaffEmail = data.lead_staff_email || null;
-
-    //                 console.log("Fetched lead staff email:", leadStaffEmail);
-    //             } else {
-    //                 console.warn("Site document does not exist");
-    //             }
-
-    //         } catch (err) {
-    //             console.error("Error fetching site email:", err);
-    //         }
-    //     }
-    // })
-
         // Prefill form fields on page load
         window.addEventListener('DOMContentLoaded', function() {
             const params = getUrlParams();
