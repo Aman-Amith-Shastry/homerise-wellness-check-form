@@ -188,25 +188,7 @@
                 <div class="form-group">
                     <label for="siteName">Site Name</label>
                     <select id="siteName" name="siteName" required>
-                        <option value="">Select a site...</option>
-                        <option value="mTXyXwRk1Ij9RXqgxq9I">666 ELLIS STREET</option>
-                        <option value="CFGpiYra4azjJBJCC7JB">DRS. JULIAN & RAYE RICHARDSON APARTMENTS</option>
-                        <option value="DGrNKqinxsIUjdmfOhDu">MISSION BAY</option>
-                        <option value="FXmRnczocmfuRzv1RJ9r">ARNETT WATSON APARTMENTS</option>
-                        <option value="I1t7wfStdjOf2s5zYBnh">5TH STREET APARTMENTS</option>
-                        <option value="IF9eH4RtZvmNdmCx5iO9">RENE CAZENAVE APARTMENTS</option>
-                        <option value="M7hziT79YLCUcOGQ9MRT">SAN CRISTINA</option>
-                        <option value="MDratkS8egjfZ9SKmCpW">HAMLIN HOTEL</option>
-                        <option value="OXH8DFp9B6sdwQZhKQ3X">THE VILLAGES & ISLAND BAY HOMES</option>
-                        <option value="V2d0vH2MyTo7AKbINBV5">SENATOR</option>
-                        <option value="bSeQ6DIdGlFISkM0prOA">ZYGMUNT ARENDT HOUSE</option>
-                        <option value="cOUc8cJTDByJ0ZnpJ5yQ">THE VILLIAM PENN HOTEL</option>
-                        <option value="d7NsbcVmpf0f9vZR7W36">EDWARD II</option>
-                        <option value="fMIxqJY5nw7Vyl0eGh26">JAZZIE COLLINS APARTMENTS</option>
-                        <option value="moB1mpyDCE4MKQr6aHpB">RACHEL TOWNSEND APARTMENTS</option>
-                        <option value="qbzsN8GkYnoCdtO2nMo6">CAMBRIDGE APARTMENTS</option>
-                        <option value="wFuloyHMd5NB2iz1E1LK">IROQUOIS</option>
-                        <option value="wV3OMQ4naZDVacBhJ11Z">ESSEX</option>
+                        <option value="">Loading sites...</option>
                     </select>
                 </div>
 
@@ -221,8 +203,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="hodName">HOD Name</label>
-                    <input type="text" id="hodName" name="hodName" placeholder="e.g. Jane Smith" required>
+                    <label for="staffName">Staff Name</label>
+                    <input type="text" id="staffName" name="staffName" placeholder="e.g. Jane Smith" required>
                 </div>
 
                 <div class="form-group">
@@ -255,8 +237,8 @@
                     <span class="detail-value" id="completionResident"></span>
                 </div>
                 <div class="detail-row">
-                    <span class="detail-label">HOD Name:</span>
-                    <span class="detail-value" id="completionHod"></span>
+                    <span class="detail-label">Staff Name:</span>
+                    <span class="detail-value" id="completionStaff"></span>
                 </div>
 
                 <div style="border-top: 2px solid #999; margin: 20px 0;"></div>
@@ -272,16 +254,19 @@
     <script type="module">
 /* ---------------- Firebase Setup ---------------- */
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-            import { 
-                getFirestore, 
+            import {
+                getFirestore,
                 doc,
-                updateDoc, 
-                collection, 
+                updateDoc,
+                collection,
                 addDoc,
-                getDocs, 
                 serverTimestamp,
-                getDoc 
+                getDoc
             } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            import {
+                getFunctions,
+                httpsCallable
+            } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
 
             const firebaseConfig = {
                 apiKey: "AIzaSyBoZMRJHGBrYsv3z3Ls1MZDSiUTEjDxjPU",
@@ -291,33 +276,34 @@
 
             const app = initializeApp(firebaseConfig);
             const db = getFirestore(app);
+            const functions = getFunctions(app);
 
             async function loadSites() {
                 const select = document.getElementById("siteName");
 
                 try {
-                    const querySnapshot = await getDocs(collection(db, "sites"));
+                    const getSites = httpsCallable(functions, "getSites");
+                    const result = await getSites();
+                    const sites = result.data.sites;
 
-                    const sites = [];
-                        querySnapshot.forEach(doc => {
-                            sites.push({ id: doc.id, name: doc.data().name });
-                        });
+                    select.innerHTML = '<option value="">Select a site...</option>';
+                    sites.forEach(site => {
+                        const option = document.createElement("option");
+                        option.value = site.id;
+                        option.textContent = site.name;
+                        select.appendChild(option);
+                    });
 
-                        sites.sort((a, b) => a.name.localeCompare(b.name));
-
-                        sites.forEach(site => {
-                            const option = document.createElement("option");
-                            option.value = site.id;
-                            option.textContent = site.name;
-                            select.appendChild(option);
-                        });
+                    const urlSiteId = new URLSearchParams(window.location.search).get('siteId');
+                    if (urlSiteId) select.value = urlSiteId;
 
                 } catch (error) {
                     console.error("Error loading sites:", error);
+                    select.innerHTML = '<option value="">Failed to load sites</option>';
                 }
             }
 
-                // loadSites();
+            loadSites();
 
 
 
@@ -337,7 +323,7 @@ const residentId = params.get("residentId");
                 siteId: params.get('siteId') || '',
                 residentName: params.get('residentName') || '',
                 residentId: params.get('residentId') || '',
-                hodName: params.get('hodName') || '',
+                staffName: params.get('staffName') || '',
                 details: params.get('details') || ''
             };
         }
@@ -352,8 +338,8 @@ const residentId = params.get("residentId");
             if (params.residentName) {
                 document.getElementById('residentName').value = params.residentName;
             }
-            if (params.hodName) {
-                document.getElementById('hodName').value = params.hodName;
+            if (params.staffName) {
+                document.getElementById('staffName').value = params.staffName;
             }
             if (params.details) {
                 document.getElementById('details').value = params.details;
@@ -371,7 +357,7 @@ const residentId = params.get("residentId");
         siteName: document.getElementById('siteName').value,
         residentName: document.getElementById('residentName').value,
         email: document.getElementById('email').value,
-        hodName: document.getElementById('hodName').value,
+        staffName: document.getElementById('staffName').value,
         details: document.getElementById('details').value,
         createdAt: serverTimestamp()
     };
@@ -398,7 +384,7 @@ const residentId = params.get("residentId");
                 email: formData.email,
                 state: true,
                 last_check_in: serverTimestamp(),
-                last_hod: formData.hodName,
+                last_staff: formData.staffName,
                 notes: formData.details
             });
 
@@ -427,7 +413,7 @@ const residentId = params.get("residentId");
             document.getElementById('completionTime').textContent = dateTimeString;
             document.getElementById('completionSite').textContent = formData.siteName;
             document.getElementById('completionResident').textContent = formData.residentName;
-            document.getElementById('completionHod').textContent = formData.hodName;
+            document.getElementById('completionStaff').textContent = formData.staffName;
             document.getElementById('completionDetails').textContent = formData.details;
             
             // Switch screens
