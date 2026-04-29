@@ -352,9 +352,10 @@ const residentId = params.get("residentId");
    
     e.preventDefault();
 
+    const siteSelect = document.getElementById('siteName');
     const formData = {
-        domainName: "aman-amith-shastry.github.io",
-        siteName: document.getElementById('siteName').value,
+        domainName: "homerise.github.io",
+        siteName: siteSelect.options[siteSelect.selectedIndex].text,
         residentName: document.getElementById('residentName').value,
         email: document.getElementById('email').value,
         staffName: document.getElementById('staffName').value,
@@ -363,7 +364,6 @@ const residentId = params.get("residentId");
     };
 
     console.log('Form submitted:', formData);
-    var lmao = "lmfao"
 
     try {
         if (siteId && residentId) {
