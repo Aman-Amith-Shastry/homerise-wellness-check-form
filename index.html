@@ -345,8 +345,8 @@ const residentId = params.get("residentId");
                 document.getElementById('details').value = params.details;
             }
             
-            document.getElementById('siteoptions').readOnly = true;
-            document.getElementById('residentName').readOnly = true;
+            document.getElementById('siteoptions').disabled = true;
+            document.getElementById('residentName').disabled = true;
             
 
         document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
