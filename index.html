@@ -383,7 +383,7 @@ const residentId = params.get("residentId");
             await updateDoc(residentRef, {
                 email: formData.email,
                 state: true,
-                last_wellness_check: serverTimestamp(),
+                last_wellness_check_submitted: serverTimestamp(),
                 last_staff: formData.staffName,
                 notes: formData.details
             });
