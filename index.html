@@ -188,7 +188,7 @@
                 <div class="form-group">
                     <label for="siteName">Site Name</label>
                     <select id="siteName" name="siteName" required>
-                        <option value="">Loading sites...</option>
+                        <option value="" id="siteoptions">Loading sites...</option>
                     </select>
                 </div>
 
@@ -247,7 +247,7 @@
                 <div class="detail-value" id="completionDetails" style="margin-top: 10px; line-height: 1.6;"></div>
             </div>
 
-            <button class="submit-btn" onclick="location.reload()">Return to Sign In</button>
+            <button class="submit-btn" onclick="window.location.href='https://homerise-portal.web.app/';">Return to Sign In</button>
         </div>
     </div>
 
@@ -344,7 +344,9 @@ const residentId = params.get("residentId");
             if (params.details) {
                 document.getElementById('details').value = params.details;
             }
-
+            
+            document.getElementById('siteoptions').readOnly = true;
+            document.getElementById('residentName').readOnly = true;
             
 
         document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
