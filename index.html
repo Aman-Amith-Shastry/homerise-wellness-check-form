@@ -188,7 +188,7 @@
                 <div class="form-group">
                     <label for="siteName">Site Name</label>
                     <select id="siteName" name="siteName" required>
-                        <option value="" id="siteoptions">Loading sites...</option>
+                        <option value="">Loading sites...</option>
                     </select>
                 </div>
 
@@ -345,7 +345,7 @@ const residentId = params.get("residentId");
                 document.getElementById('details').value = params.details;
             }
             
-            document.getElementById('siteoptions').disabled = true;
+            document.getElementById('siteName').disabled = true;
             document.getElementById('residentName').disabled = true;
             
 
